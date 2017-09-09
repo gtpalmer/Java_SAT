@@ -1,6 +1,8 @@
-package com.gtpalmer.Rank_SAT;
+package com.gtpalmer.Java_SAT;
 
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Vector;
 
 /**
  * Created by gtpalmer on 7/14/17.
@@ -15,10 +17,12 @@ public class Max_Min_SAT extends SAT {
 
     private vector<Var_data> var_data;
 
-    Max_Min_SAT() {
+    Max_Min_SAT(InputStream is, OutputStream os) {
+        super(is, os);
     }
 
-    Max_Min_SAT(InputStream is) {
-        super(is);
+    @Override
+    public Vector<Int> solve() {
+        return null;
     }
 }

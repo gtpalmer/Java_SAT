@@ -1,9 +1,10 @@
-package com.gtpalmer.Rank_SAT;
+package com.gtpalmer.Java_SAT;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Scanner;
 import java.util.Vector;
-import java.util.HashMap;
+import java.lang.Math;
 
 /**
  * Created by gtpalmer on 7/5/17.
@@ -12,15 +13,17 @@ public abstract class SAT {
 
     //How can we use polymorphism to make this less wasteful?
     static class Variable {
-        vector<Integer> pos_sat;
-        vector<Integer> neg_sat;
+        Vector<Integer> pos_sat;
+        Vector<Integer> neg_sat;
+    }
+    static class Clause {
+        Vector<int> satisfiers;
+        int count = 0;
     }
 
-    private vector<Variable> vars;
-
-
-    SAT() {
-    }
+    private Vector<Variable> vars;
+    private Vector<Clause> clauses;
+    private Vector<Boolean> curr_clauses;
 
     /*
     Expected Input From a file is as follows:
@@ -42,19 +45,51 @@ public abstract class SAT {
     1 2 -3 4 0
     2 -3 0
      */
-    SAT(InputStream is) {
+    SAT(InputStream is, OutputStream os) {
+        vars = new Vector<Variable>();
+        clauses = new Vector<Clause>();
+        curr_clauses = new Vector<Boolean>();
+
         Scanner sc = new Scanner(is);
         while (sc.next() == "c") {
             sc.nextLine();
         }
         if (sc.next() != "p") {
-            Standart.out.println("Error: First non-comment line must begin with 'p'");
+            System.err.println("Error: First non-comment line must begin with 'p'");
             System.exit(1);
         }
         sc.next();
         int num_vars = sc.nextInt();
         int num_clauses = sc.nextInt();
-        
 
+        vars.setSize(num_vars + 1);
+        clauses.setSize(num_clauses);
+        int clause_num = 0;
+
+        while (sc.hasNextInt()) {
+            int temp = sc.nextInt();
+            if (temp != 0) {
+                clauses.get(clause_num).satisfiers.add(temp);
+                clauses.get(clause_num).count++;
+                if (temp > 0) {
+                    vars.get(temp).pos_sat.add(clause_num);
+                }
+                else {
+                    temp = Math.abs(temp);
+                    vars.get(temp).neg_sat.add(clause_num);
+                }
+            }
+            else {
+                clause_num++;
+            }
+        }
+        
+        //Start with all clauses
+        curr_clauses.setSize(num_clauses);
+        for (i = 0; i < num_clauses; i++) {
+            curr_clauses.get(i) = Boolean.TRUE;
+        }
     }
+    abstract public Vector<Int> solve();
+
 }
