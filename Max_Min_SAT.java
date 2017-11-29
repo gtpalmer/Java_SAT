@@ -15,14 +15,19 @@ public class Max_Min_SAT extends SAT {
         int weight;
     }
 
-    private vector<Var_data> var_data;
+    private Vector<Var_data> var_data;
 
     Max_Min_SAT(InputStream is, OutputStream os) {
         super(is, os);
     }
 
     @Override
-    public Vector<Int> solve() {
+    public Vector<Integer> solve() {
+        return null;
+    }
+
+    @Override
+    public Boolean verify() {
         return null;
     }
 }

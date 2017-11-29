@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.util.Scanner;
 import java.util.Vector;
 import java.lang.Math;
+import java.util.HashSet;
 
 /**
  * Created by gtpalmer on 7/5/17.
@@ -17,13 +18,15 @@ public abstract class SAT {
         Vector<Integer> neg_sat;
     }
     static class Clause {
-        Vector<int> satisfiers;
+        Vector<Integer> satisfiers;
         int count = 0;
     }
 
-    private Vector<Variable> vars;
-    private Vector<Clause> clauses;
-    private Vector<Boolean> curr_clauses;
+    InputStream in_str;
+    OutputStream out_str;
+    Vector<Variable> vars;
+    Vector<Clause> clauses;
+    Vector<Boolean> curr_clauses;
 
     /*
     Expected Input From a file is as follows:
@@ -46,15 +49,18 @@ public abstract class SAT {
     2 -3 0
      */
     SAT(InputStream is, OutputStream os) {
+
+        in_str = is;
+        out_str = os;
         vars = new Vector<Variable>();
         clauses = new Vector<Clause>();
         curr_clauses = new Vector<Boolean>();
 
         Scanner sc = new Scanner(is);
-        while (sc.next() == "c") {
+        while (sc.next().equals("c")) {
             sc.nextLine();
         }
-        if (sc.next() != "p") {
+        if (!sc.next().equals("p")) {
             System.err.println("Error: First non-comment line must begin with 'p'");
             System.exit(1);
         }
@@ -86,10 +92,12 @@ public abstract class SAT {
         
         //Start with all clauses
         curr_clauses.setSize(num_clauses);
-        for (i = 0; i < num_clauses; i++) {
-            curr_clauses.get(i) = Boolean.TRUE;
+        for (int i = 0; i < num_clauses; i++) {
+            curr_clauses.set(i, Boolean.TRUE);
         }
     }
-    abstract public Vector<Int> solve();
+    abstract public Vector<Integer> solve();
+
+    abstract public Boolean verify();
 
 }

@@ -66,7 +66,8 @@ public class Main {
             }
         }
         Random_SAT mySAT = new Random_SAT(is, os);
-	    Vector<Int> solutions = Random_SAT.solve();
+	    Vector<Integer> solutions = mySAT.solve();
+
 
     }
 }
