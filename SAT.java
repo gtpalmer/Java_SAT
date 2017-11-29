@@ -96,8 +96,37 @@ public abstract class SAT {
             curr_clauses.set(i, Boolean.TRUE);
         }
     }
+    public Boolean verify(Vector<Integer> sol) {
+        HashSet<Integer> unsatisfied = new HashSet<Integer>();
+        for (int i = 0; i < clauses.size(); i++) {
+            unsatisfied.add(i);
+        }
+        for (Integer var : sol) {
+            if (var > 0) {
+                for (Integer idx : vars.get(var).pos_sat) {
+                    unsatisfied.remove(idx);
+                }
+            }
+            else if (var < 0){
+                for (Integer idx : vars.get(-var).neg_sat) {
+                    unsatisfied.remove(idx);
+                }
+            }
+            else {
+                throw new RuntimeException("Error: Variable cannot equal 0");
+            }
+        }
+
+        if (unsatisfied.isEmpty()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     abstract public Vector<Integer> solve();
 
-    abstract public Boolean verify();
+
 
 }

@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Vector;
 import java.util.Iterator;
-import java.lang.Math;
 import java.util.ArrayDeque;
 
 public class Random_SAT extends SAT {
@@ -17,7 +16,7 @@ public class Random_SAT extends SAT {
     @Override
     public Vector<Integer> solve() {
 
-        HashSet<Integer> curr_vars = new HashSet<Integer>();
+        HashSet<Integer> curr_vars = new HashSet<>();
         //Create set of indices of available variables
         for (int i = 1; i < vars.size(); i++) {
             curr_vars.add(i);
@@ -65,12 +64,6 @@ public class Random_SAT extends SAT {
         }
         return new Vector<>();
     }
-
-    @Override
-    public Boolean verify() {
-        return null;
-    }
-
 
     private Integer get_next_var(HashSet<Integer> curr_vars, ArrayDeque<Integer> choices) {
         Integer curr_var = new Integer(0);

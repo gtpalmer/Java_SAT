@@ -69,5 +69,6 @@ public class Main {
 	    Vector<Integer> solutions = mySAT.solve();
 
 
+
     }
 }
