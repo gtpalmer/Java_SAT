@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Vector;
 
 public class Main {
@@ -13,7 +14,7 @@ public class Main {
         Boolean infile = Boolean.FALSE;
         InputStream is = System.in;
         Boolean outfile = Boolean.FALSE;
-        OutputStream os = System.out;
+        PrintStream os = System.out;
 
 	    for (int i = 0; i < args.length; i++) {
 	        switch(args[i]) {
@@ -56,17 +57,28 @@ public class Main {
                         System.err.println("No filename entered");
                         System.exit(1);
                     }
-                    outfile = Boolean.TRUE;
+                    try {
+                        String currdir = System.getProperty("user.dir");
+                        os = new PrintStream(currdir + filename);
+                        outfile = Boolean.TRUE;
+                    } catch (FileNotFoundException e) {
+                        System.err.println("File not found");
+                        System.exit(1);
+                    }
                     break;
                 }
                 default:
                     System.err.println("Unknown Command line argument: " + args[i]);
                     System.exit(1);
-
             }
         }
         Random_SAT mySAT = new Random_SAT(is, os);
 	    Vector<Integer> solutions = mySAT.solve();
+
+	    if (mySAT.verify(solutions)) {
+            os.println("Verified!");
+            os.println("Correct ");
+        }
 
 
 
