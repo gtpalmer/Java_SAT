@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import Java_SAT.*;
+=======
+package com.gtpalmer.Java_SAT;
+
+>>>>>>> d8a7cb97657c4734a642057cf1db110c3cc45ac5
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -81,5 +86,6 @@ public class Main {
 	    else {
 	    	os.println("No Solution!");
 	    }
+
     }
 }
